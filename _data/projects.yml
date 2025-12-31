@@ -1,0 +1,49 @@
+# Projects data file
+# To add a new project, add an entry to the appropriate category below
+
+published:
+  - title: "Operation Reclaim"
+    slug: "operation-reclaim"
+    description: "A strategic gameplay experience focused on reclaiming territory."
+    youtube_id: "wuDB4yGGVdI"
+    thumbnail: "/assets/img/operation-reclaim/thumbnail.jpg"
+    category: "Published"
+    
+  - title: "Experiment Vessel"
+    slug: "experiment-vessel"
+    description: "An experimental game exploring vessel-based mechanics."
+    youtube_id: "jIpEgydnoy8"
+    thumbnail: "/assets/img/experiment-vessel/thumbnail.jpg"
+    category: "Published"
+    
+  - title: "Wisteria"
+    slug: "wisteria"
+    description: "A narrative-driven experience set in a mystical world."
+    youtube_id: null
+    thumbnail: "/assets/img/wisteria/thumbnail.jpg"
+    category: "Published"
+
+school:
+  - title: "Oli's Cofferia"
+    slug: "olis-cofferia"
+    description: "A coffee shop management game created as a school project."
+    youtube_id: "96HF4G3wLgE"
+    thumbnail: "/assets/img/olis-cofferia/thumbnail.jpg"
+    category: "School"
+
+personal:
+  - title: "Runner 626"
+    slug: "runner-626"
+    description: "An endless runner with a sci-fi twist. Coming soon."
+    youtube_id: null
+    thumbnail: "/assets/img/coming-soon.jpg"
+    category: "Personal"
+    coming_soon: true
+    
+  - title: "Dungeonish Shooter"
+    slug: "dungeonish-shooter"
+    description: "A dungeon crawler meets top-down shooter. Coming soon."
+    youtube_id: null
+    thumbnail: "/assets/img/coming-soon.jpg"
+    category: "Personal"
+    coming_soon: true

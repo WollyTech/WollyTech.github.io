@@ -1,0 +1,79 @@
+---
+layout: default
+---
+
+<article class="project-detail">
+    {% if page.hero_image %}
+    <div class="project-hero">
+        <img src="{{ page.hero_image | relative_url }}" alt="{{ page.title }}">
+    </div>
+    {% endif %}
+
+    <div class="container">
+        <h1 class="section-header">{{ page.title }}</h1>
+        
+        {% if page.youtube_id %}
+        <section class="project-section">
+            <div class="two-column">
+                <div class="column">
+                    <div class="video-wrapper">
+                        <iframe 
+                            src="https://www.youtube.com/embed/{{ page.youtube_id }}" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+                <div class="column">
+                    {{ content }}
+                </div>
+            </div>
+        </section>
+        {% else %}
+        <section class="project-section">
+            {{ content }}
+        </section>
+        {% endif %}
+
+        {% if page.roles %}
+        <section class="project-section">
+            <h2>Roles & Responsibilities</h2>
+            <ul class="roles-list">
+            {% for role in page.roles %}
+                <li>{{ role }}</li>
+            {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+
+        {% if page.gallery %}
+        <section class="project-section">
+            <h2>Gallery</h2>
+            <div class="gallery">
+            {% for image in page.gallery %}
+                <div class="gallery-item">
+                    <img src="{{ image.url | relative_url }}" alt="{{ image.caption | default: page.title }}">
+                    {% if image.caption %}
+                    <p class="gallery-caption">{{ image.caption }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if page.design_story %}
+        <section class="project-section">
+            <h2>Design Story</h2>
+            <div class="design-story">
+                {{ page.design_story }}
+            </div>
+        </section>
+        {% endif %}
+
+        <div class="back-link">
+            <a href="{{ '/projects/' | relative_url }}">← Back to Projects</a>
+        </div>
+    </div>
+</article>
