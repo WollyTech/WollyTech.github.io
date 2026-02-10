@@ -7,7 +7,7 @@
     <meta name="description" content="{{ page.description | default: site.description }}">
     <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 </head>
-<body>
+<body{% if page.url == '/' %} class="home-page"{% elsif page.layout == 'project' %} class="project-page"{% endif %}>
     {% include nav.html %}
     
     <main class="main-content">
@@ -15,5 +15,216 @@
     </main>
     
     {% include footer.html %}
+
+    <script>
+    // Navbar scroll effect - on home page and project pages
+    if (document.body.classList.contains('home-page') || document.body.classList.contains('project-page')) {
+        const header = document.querySelector('.site-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+    }
+
+    // Animated collapsible sections
+    document.querySelectorAll('.collapsible-section details').forEach(details => {
+        const content = details.querySelector('.collapsible-content');
+        const summary = details.querySelector('summary');
+        
+        summary.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            if (details.open) {
+                // Closing animation
+                content.style.maxHeight = content.scrollHeight + 'px';
+                content.style.overflow = 'hidden';
+                requestAnimationFrame(() => {
+                    content.style.maxHeight = '0';
+                    content.style.opacity = '0';
+                });
+                
+                setTimeout(() => {
+                    details.open = false;
+                    content.style.maxHeight = '';
+                    content.style.overflow = '';
+                    content.style.opacity = '';
+                }, 300);
+            } else {
+                // Opening animation
+                details.open = true;
+                const height = content.scrollHeight;
+                content.style.maxHeight = '0';
+                content.style.opacity = '0';
+                content.style.overflow = 'hidden';
+                
+                requestAnimationFrame(() => {
+                    content.style.maxHeight = height + 'px';
+                    content.style.opacity = '1';
+                });
+                
+                setTimeout(() => {
+                    content.style.maxHeight = '';
+                    content.style.overflow = '';
+                }, 300);
+            }
+        });
+    });
+
+    // Gallery navigation buttons with wrap-around
+    document.querySelectorAll('.project-gallery-scroll').forEach(gallery => {
+        const container = gallery.querySelector('.gallery-scroll-container');
+        const leftBtn = gallery.querySelector('.gallery-nav-left');
+        const rightBtn = gallery.querySelector('.gallery-nav-right');
+        const items = gallery.querySelectorAll('.gallery-scroll-item');
+        
+        if (leftBtn && rightBtn && container && items.length > 1) {
+            const scrollAmount = () => container.offsetWidth;
+            
+            leftBtn.addEventListener('click', () => {
+                // Check if at the beginning, wrap to end
+                if (container.scrollLeft <= 10) {
+                    container.scrollTo({ left: container.scrollWidth, behavior: 'smooth' });
+                } else {
+                    container.scrollBy({ left: -scrollAmount(), behavior: 'smooth' });
+                }
+            });
+            
+            rightBtn.addEventListener('click', () => {
+                // Check if at the end, wrap to beginning
+                if (container.scrollLeft + container.offsetWidth >= container.scrollWidth - 10) {
+                    container.scrollTo({ left: 0, behavior: 'smooth' });
+                } else {
+                    container.scrollBy({ left: scrollAmount(), behavior: 'smooth' });
+                }
+            });
+        }
+    });
+
+    // Gallery Modal functionality
+    const modal = document.getElementById('galleryModal');
+    if (modal) {
+        const modalImage = modal.querySelector('.gallery-modal-image');
+        const modalCaption = modal.querySelector('.gallery-modal-caption');
+        const modalBackdrop = modal.querySelector('.gallery-modal-backdrop');
+        const prevBtn = modal.querySelector('.gallery-modal-prev');
+        const nextBtn = modal.querySelector('.gallery-modal-next');
+        const galleryItems = document.querySelectorAll('.gallery-scroll-item');
+        let currentIndex = 0;
+        
+        // Open modal when clicking gallery image
+        galleryItems.forEach((item, index) => {
+            item.addEventListener('click', () => {
+                currentIndex = index;
+                openModal();
+            });
+        });
+        
+        function openModal() {
+            const img = galleryItems[currentIndex].querySelector('img');
+            modalImage.src = img.src;
+            modalImage.alt = img.alt;
+            modalCaption.textContent = img.dataset.caption || '';
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Trigger animation
+            requestAnimationFrame(() => {
+                modal.classList.add('visible');
+            });
+        }
+        
+        function closeModal() {
+            modal.classList.remove('visible');
+            setTimeout(() => {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }, 300);
+        }
+        
+        function showImage(index) {
+            // Wrap around
+            if (index < 0) index = galleryItems.length - 1;
+            if (index >= galleryItems.length) index = 0;
+            currentIndex = index;
+            
+            const img = galleryItems[currentIndex].querySelector('img');
+            modalImage.src = img.src;
+            modalImage.alt = img.alt;
+            modalCaption.textContent = img.dataset.caption || '';
+        }
+        
+        // Close modal when clicking backdrop
+        modalBackdrop.addEventListener('click', closeModal);
+        
+        // Navigation buttons
+        prevBtn.addEventListener('click', () => showImage(currentIndex - 1));
+        nextBtn.addEventListener('click', () => showImage(currentIndex + 1));
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (!modal.classList.contains('active')) return;
+            
+            if (e.key === 'Escape') closeModal();
+            if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
+            if (e.key === 'ArrowRight') showImage(currentIndex + 1);
+        });
+    }
+
+    // Extract average color from project banner image
+    if (document.body.classList.contains('project-page')) {
+        const banner = document.querySelector('.project-banner');
+        if (banner) {
+            const bgImage = banner.style.backgroundImage;
+            if (bgImage && bgImage !== 'none') {
+                // Extract URL from background-image
+                const urlMatch = bgImage.match(/url\(["']?([^"')]+)["']?\)/);
+                if (urlMatch && urlMatch[1]) {
+                    const img = new Image();
+                    img.crossOrigin = 'Anonymous';
+                    img.src = urlMatch[1];
+                    
+                    img.onload = function() {
+                        // Create canvas to extract color
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        // Use small size for performance
+                        canvas.width = 50;
+                        canvas.height = 50;
+                        
+                        ctx.drawImage(img, 0, 0, 50, 50);
+                        
+                        try {
+                            const imageData = ctx.getImageData(0, 0, 50, 50).data;
+                            let r = 0, g = 0, b = 0;
+                            const pixelCount = imageData.length / 4;
+                            
+                            for (let i = 0; i < imageData.length; i += 4) {
+                                r += imageData[i];
+                                g += imageData[i + 1];
+                                b += imageData[i + 2];
+                            }
+                            
+                            // Calculate average and darken it for better readability
+                            r = Math.floor((r / pixelCount) * 0.4);
+                            g = Math.floor((g / pixelCount) * 0.4);
+                            b = Math.floor((b / pixelCount) * 0.4);
+                            
+                            const avgColor = `rgb(${r}, ${g}, ${b})`;
+                            document.body.style.setProperty('--project-bg-color', avgColor);
+                        } catch (e) {
+                            // CORS or other error - use default color
+                            console.log('Could not extract banner color, using default');
+                        }
+                    };
+                }
+            }
+        }
+    }
+    </script>
 </body>
 </html>

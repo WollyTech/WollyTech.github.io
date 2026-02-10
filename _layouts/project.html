@@ -3,19 +3,18 @@ layout: default
 ---
 
 <article class="project-detail">
-    {% if page.hero_image %}
-    <div class="project-hero">
-        <img src="{{ page.hero_image | relative_url }}" alt="{{ page.title }}">
+    <!-- Project Banner -->
+    <div class="project-banner" {% if page.banner_image %}style="background-image: url('{{ page.banner_image | relative_url }}');"{% endif %}>
+        <div class="project-banner-overlay"></div>
     </div>
-    {% endif %}
 
     <div class="container">
-        <h1 class="section-header">{{ page.title }}</h1>
-        
-        {% if page.youtube_id %}
-        <section class="project-section">
-            <div class="two-column">
-                <div class="column">
+        <!-- Row 1: Video/Gallery + Info -->
+        <div class="project-row-1">
+            <!-- Left Column: Video + Gallery -->
+            <div class="project-media">
+                {% if page.youtube_id %}
+                <div class="project-video">
                     <div class="video-wrapper">
                         <iframe 
                             src="https://www.youtube.com/embed/{{ page.youtube_id }}" 
@@ -25,52 +24,204 @@ layout: default
                         </iframe>
                     </div>
                 </div>
-                <div class="column">
-                    {{ content }}
+                {% endif %}
+
+                {% if page.gallery %}
+                <div class="project-gallery-scroll">
+                    {% if page.gallery.size > 1 %}
+                    <button class="gallery-nav gallery-nav-left" aria-label="Previous image">&#10094;</button>
+                    <button class="gallery-nav gallery-nav-right" aria-label="Next image">&#10095;</button>
+                    {% endif %}
+                    <div class="gallery-scroll-container">
+                        {% for image in page.gallery %}
+                        <div class="gallery-scroll-item" data-index="{{ forloop.index0 }}">
+                            <img src="{{ image.url | relative_url }}" alt="{{ image.caption | default: page.title }}" data-caption="{{ image.caption }}">
+                            {% if image.caption %}
+                            <div class="gallery-scroll-caption">
+                                <span>{{ image.caption }}</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
                 </div>
+
+                <!-- Gallery Modal -->
+                <div class="gallery-modal" id="galleryModal">
+                    <div class="gallery-modal-backdrop"></div>
+                    <div class="gallery-modal-content">
+                        <button class="gallery-modal-nav gallery-modal-prev" aria-label="Previous image">&#10094;</button>
+                        <div class="gallery-modal-image-container">
+                            <img src="" alt="" class="gallery-modal-image">
+                            <div class="gallery-modal-caption"></div>
+                        </div>
+                        <button class="gallery-modal-nav gallery-modal-next" aria-label="Next image">&#10095;</button>
+                    </div>
+                </div>
+                {% endif %}
             </div>
-        </section>
-        {% else %}
-        <section class="project-section">
-            {{ content }}
-        </section>
-        {% endif %}
 
-        {% if page.roles %}
-        <section class="project-section">
-            <h2>Roles & Responsibilities</h2>
-            <ul class="roles-list">
-            {% for role in page.roles %}
-                <li>{{ role }}</li>
-            {% endfor %}
-            </ul>
-        </section>
-        {% endif %}
+            <!-- Right Column: Title, Description, Info -->
+            <div class="project-info">
+                <h1 class="project-title">{{ page.title | upcase }}</h1>
+                
+                <div class="project-description">
+                    {{ page.description }}
+                </div>
 
-        {% if page.gallery %}
-        <section class="project-section">
-            <h2>Gallery</h2>
-            <div class="gallery">
-            {% for image in page.gallery %}
-                <div class="gallery-item">
-                    <img src="{{ image.url | relative_url }}" alt="{{ image.caption | default: page.title }}">
-                    {% if image.caption %}
-                    <p class="gallery-caption">{{ image.caption }}</p>
+                <div class="project-meta-grid">
+                    <div class="meta-column">
+                        {% if page.genre %}
+                        <p><strong>Genre:</strong> {{ page.genre }}</p>
+                        {% endif %}
+                        {% if page.team_size %}
+                        <p><strong>Team Size:</strong> {{ page.team_size }}</p>
+                        {% endif %}
+                        {% if page.engine %}
+                        <p><strong>Engine:</strong> {{ page.engine }}</p>
+                        {% endif %}
+                    </div>
+                    <div class="meta-column">
+                        {% if page.platform %}
+                        <p><strong>Platform:</strong> {{ page.platform }}</p>
+                        {% endif %}
+                        {% if page.duration %}
+                        <p><strong>Duration:</strong> {{ page.duration }}</p>
+                        {% endif %}
+                        {% if page.awards %}
+                        <p><strong>Awards:</strong> {{ page.awards }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if page.project_url %}
+                <div class="project-link">
+                    <p><strong>Project URL:</strong> <a href="{{ page.project_url }}" target="_blank">{{ page.project_url }}</a></p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Row 2: Roles & Design Story -->
+        <div class="project-row-2">
+            <!-- Roles and Responsibilities -->
+            {% if page.roles_responsibilities %}
+            <section class="project-roles collapsible-section">
+                <details open>
+                    <summary><h2 class="section-subheader">Roles and Responsibilities</h2></summary>
+                    <div class="collapsible-content">
+                {% if page.roles_responsibilities.level_design %}
+                <div class="role-section">
+                    <h3 class="role-title">Level Design:</h3>
+                    <ul class="role-list">
+                        {% for item in page.roles_responsibilities.level_design %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if page.roles_responsibilities.system_design %}
+                <div class="role-section">
+                    <h3 class="role-title">System Design:</h3>
+                    <ul class="role-list">
+                        {% for item in page.roles_responsibilities.system_design %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if page.roles_responsibilities.combat_design %}
+                <div class="role-section">
+                    <h3 class="role-title">Combat Design:</h3>
+                    <ul class="role-list">
+                        {% for item in page.roles_responsibilities.combat_design %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if page.roles_responsibilities.ux_design %}
+                <div class="role-section">
+                    <h3 class="role-title">UX Design:</h3>
+                    <ul class="role-list">
+                        {% for item in page.roles_responsibilities.ux_design %}
+                        <li>{{ item }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if page.roles_responsibilities.team_leader %}
+                <div class="role-section">
+                    <h3 class="role-title">Team Leader:</h3>
+                    <ul class="role-list">
+                        {% for item in page.roles_responsibilities.team_leader %}
+                        <li>{{ item | markdownify | remove: '<p>' | remove: '</p>' }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+                    </div>
+                </details>
+            </section>
+            {% endif %}
+
+            <!-- Design Story -->
+            {% if page.design_story %}
+            <section class="project-design-story collapsible-section">
+                <details open>
+                    <summary><h2 class="section-subheader">Design Story</h2></summary>
+                    <div class="collapsible-content">
+                
+                {% if page.design_story.purpose_goal %}
+                <div class="design-purpose">
+                    <h3 class="role-title">Purpose & Goal:</h3>
+                    <p>{{ page.design_story.purpose_goal }}</p>
+                </div>
+                {% endif %}
+
+                <div class="design-columns">
+                    {% if page.design_story.concept %}
+                    <div class="design-column">
+                        <h3 class="design-column-title">Concept:</h3>
+                        <ul class="design-list">
+                            {% for item in page.design_story.concept %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    {% if page.design_story.development %}
+                    <div class="design-column">
+                        <h3 class="design-column-title">Development:</h3>
+                        <ul class="design-list">
+                            {% for item in page.design_story.development %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+
+                    {% if page.design_story.post_development %}
+                    <div class="design-column">
+                        <h3 class="design-column-title">Post Development:</h3>
+                        <ul class="design-list">
+                            {% for item in page.design_story.post_development %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                     {% endif %}
                 </div>
-            {% endfor %}
-            </div>
-        </section>
-        {% endif %}
-
-        {% if page.design_story %}
-        <section class="project-section">
-            <h2>Design Story</h2>
-            <div class="design-story">
-                {{ page.design_story }}
-            </div>
-        </section>
-        {% endif %}
+                    </div>
+                </details>
+            </section>
+            {% endif %}
+        </div>
 
         <div class="back-link">
             <a href="{{ '/projects/' | relative_url }}">← Back to Projects</a>

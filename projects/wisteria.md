@@ -3,19 +3,19 @@ layout: project
 title: "Wisteria"
 description: "A narrative-driven experience set in a mystical world"
 permalink: /projects/wisteria/
-hero_image: /assets/img/wisteria/hero.jpg
+hero_image: /assets/img/wisteria/hero.png
 roles:
   - Narrative Designer
   - Game Designer
   - Environmental Artist
 gallery:
-  - url: /assets/img/wisteria/screenshot1.jpg
+  - url: /assets/img/wisteria/screenshot1.png
     caption: "The mystical forest"
-  - url: /assets/img/wisteria/screenshot2.jpg
+  - url: /assets/img/wisteria/screenshot2.png
     caption: "Character interaction"
-  - url: /assets/img/wisteria/screenshot3.jpg
+  - url: /assets/img/wisteria/screenshot3.png
     caption: "Environmental storytelling"
-  - url: /assets/img/wisteria/screenshot4.jpg
+  - url: /assets/img/wisteria/screenshot4.png
     caption: "Atmospheric lighting"
 ---
 

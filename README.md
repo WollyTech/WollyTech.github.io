@@ -29,7 +29,7 @@ WollyTech.github.io/
 │   │   ├── experiment-vessel/
 │   │   ├── wisteria/
 │   │   ├── olis-cofferia/
-│   │   └── coming-soon.jpg
+│   │   └── coming-soon.png
 │   └── pdfs/
 │       └── resume.pdf       # Your resume (add this!)
 ├── projects/                # Project detail pages
@@ -56,7 +56,7 @@ published:  # or 'school' or 'personal'
     slug: "your-project-name"  # URL-friendly version
     description: "Brief description"
     youtube_id: "VIDEO_ID_HERE"  # or null if no video
-    thumbnail: "/assets/img/your-project-name/thumbnail.jpg"
+    thumbnail: "/assets/img/your-project-name/thumbnail.png"
     category: "Published"  # or "School" or "Personal"
     coming_soon: false  # optional, set to true for placeholders
 ```
@@ -72,15 +72,15 @@ title: "Your Project Name"
 description: "Brief description"
 youtube_id: "VIDEO_ID_HERE"  # optional
 permalink: /projects/your-project-name/
-hero_image: /assets/img/your-project-name/hero.jpg  # optional
+hero_image: /assets/img/your-project-name/hero.png  # optional
 roles:
   - Role 1
   - Role 2
   - Role 3
 gallery:
-  - url: /assets/img/your-project-name/screenshot1.jpg
+  - url: /assets/img/your-project-name/screenshot1.png
     caption: "Description"
-  - url: /assets/img/your-project-name/screenshot2.jpg
+  - url: /assets/img/your-project-name/screenshot2.png
     caption: "Description"
 ---
 
@@ -101,9 +101,9 @@ Describe your design process...
 **Step 3: Add images**
 
 Create a folder `assets/img/your-project-name/` and add:
-- `thumbnail.jpg` (for project cards, recommended: 600x400px)
-- `hero.jpg` (optional banner image, recommended: 1200x400px)
-- `screenshot1.jpg`, `screenshot2.jpg`, etc. (gallery images)
+- `thumbnail.png` (for project cards, recommended: 600x400px)
+- `hero.png` (optional banner image, recommended: 1200x400px)
+- `screenshot1.png`, `screenshot2.png`, etc. (gallery images)
 
 ### Updating Existing Pages
 
