@@ -30,20 +30,3 @@ school:
     youtube_id: "96HF4G3wLgE"
     thumbnail: "/assets/img/olis-cofferia/thumbnail.png"
     category: "School"
-
-personal:
-  - title: "Runner 626"
-    slug: "runner-626"
-    description: "An endless runner with a sci-fi twist. Coming soon."
-    youtube_id: null
-    thumbnail: "/assets/img/coming-soon.png"
-    category: "Personal"
-    coming_soon: true
-    
-  - title: "Dungeonish Shooter"
-    slug: "dungeonish-shooter"
-    description: "A dungeon crawler meets top-down shooter. Coming soon."
-    youtube_id: null
-    thumbnail: "/assets/img/coming-soon.png"
-    category: "Personal"
-    coming_soon: true

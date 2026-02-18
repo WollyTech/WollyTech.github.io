@@ -15,8 +15,16 @@ duration: "4 weeks"
 
 # Gallery
 gallery:
-  - url: /assets/img/olis-cofferia/screenshot1.png
-    caption: "Coffee shop interface"
+  - url: /assets/img/olis-cofferia/Cofferia milk.png
+    caption: "Prepare Station - Ingredient Wheel"
+  - url: /assets/img/olis-cofferia/Cofferia order.png
+    caption: "Order Station - Customer Service"
+  - url: /assets/img/olis-cofferia/Cofferia toppings.png
+    caption: "Build Station - Toppings Selection"
+  - url: /assets/img/olis-cofferia/Cofferia score.png
+    caption: "Review Station - Order Score"
+  - url: /assets/img/olis-cofferia/Help.png
+    caption: "4 Stations Gameplay Flow"
 
 # Roles and Responsibilities
 roles_responsibilities:
@@ -28,12 +36,11 @@ roles_responsibilities:
 
 # Design Story
 design_story:
-  purpose_goal: "Oli's Cofferia was made for the final year joint project"
+  purpose_goal: "Oli's Cofferia was made for a joint project at the end of Year 1"
   concept:
-    - "What happened during conception (inspiration and designs)"
     - "Our lead artist conceptualized the game"
   development:
-    - "Different iterations in development and general changes that happened over the course"
+    - "Development was quite linear"
   post_development:
-    - "What happened after development including play tests and marketing, maybe what game accomplished as well"
+    - "Launched the project and recieved an A grade when the results were released"
 ---
